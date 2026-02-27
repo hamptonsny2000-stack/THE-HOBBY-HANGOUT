@@ -1,630 +1,607 @@
-import React, { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { Check, ShieldCheck, Lock, Sparkles, ChevronDown, ExternalLink } from "lucide-react";
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Hobby Hangout</title>
 
-/**
- * The Hobby Hangout – modern homepage mock
- * - Tailwind CSS styles assumed available
- * - Replace logo + images with your assets
- * - Primary CTA links to Whop checkout
- */
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-const WHOP_TRIAL_LINK =
-  "https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/";
-const IG_LINK = "https://www.instagram.com/joinhobbyhangout";
-const CARDLADDER_LINK =
-  "https://app.cardladder.com/signup?promo=Break&via=HobbyHangout";
+    <!-- Optional: nicer font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-const NAV = [
-  { label: "Marketplace", href: "#marketplace" },
-  { label: "How it Works", href: "#how" },
-  { label: "Why Join", href: "#why" },
-  { label: "Rules & Safety", href: "#safety" },
-  { label: "Partners", href: "#partners" },
-  { label: "FAQ", href: "#faq" },
-];
+    <style>
+      html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    </style>
+  </head>
 
-const PRIMARY_MARKETPLACES = [
-  { name: "football-50-plus", note: "$50+" },
-  { name: "basketball-50-plus", note: "$50+" },
-  { name: "baseball-50-plus", note: "$50+" },
-  { name: "nfl-nba-10-50", note: "$10–$50" },
-  { name: "baseball-10-50", note: "$10–$50" },
-  { name: "all-sports-10-under", note: "$10 & under" },
-  { name: "all-sports-1000-plus", note: "$1,000+" },
-  { name: "pokemon-slabs-only", note: "Slabs" },
-  { name: "pokemon-raw-only", note: "Raw" },
-  { name: "2025-prizm-football", note: "Set/Release" },
-];
+  <body class="bg-black text-white">
+    <!-- NAV -->
+    <header class="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur">
+      <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <a href="#top" class="flex items-center gap-3">
+          <!-- Replace this with your logo image if you want -->
+          <div class="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5">
+            <span class="text-xs font-extrabold text-yellow-300">THH</span>
+          </div>
+          <div class="leading-tight">
+            <div class="text-sm font-extrabold tracking-tight">THE HOBBY HANGOUT</div>
+            <div class="text-[11px] text-white/60">Where The Hobby Lives</div>
+          </div>
+        </a>
 
-function classNames(...xs: Array<string | false | null | undefined>) {
-  return xs.filter(Boolean).join(" ");
-}
+        <nav class="hidden items-center gap-6 text-sm text-white/70 md:flex">
+          <a href="#marketplace" class="hover:text-white">Marketplace</a>
+          <a href="#how" class="hover:text-white">How it Works</a>
+          <a href="#why" class="hover:text-white">Why Join</a>
+          <a href="#safety" class="hover:text-white">Rules & Safety</a>
+          <a href="#partners" class="hover:text-white">Partners</a>
+          <a href="#faq" class="hover:text-white">FAQ</a>
+        </nav>
 
-function GlowBG() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-      <div className="absolute -top-32 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-yellow-500/10 blur-3xl" />
-      <div className="absolute -bottom-48 left-1/3 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl" />
-      <div className="absolute -bottom-40 right-0 h-[520px] w-[620px] rounded-full bg-white/5 blur-3xl" />
-      <div className="absolute inset-0 bg-[radial-gradient(closest-side_at_50%_20%,rgba(255,215,0,0.10),transparent_60%)]" />
-    </div>
-  );
-}
+        <a
+          href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
+          target="_blank" rel="noreferrer"
+          class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-semibold text-black hover:bg-yellow-300"
+        >
+          Start 7-Day Free Trial
+        </a>
+      </div>
+    </header>
 
-function SectionTitle({ kicker, title, sub }: { kicker?: string; title: string; sub?: string }) {
-  return (
-    <div className="mx-auto mb-10 max-w-3xl text-center">
-      {kicker ? (
-        <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold tracking-wide text-yellow-300">
-          <Sparkles className="h-4 w-4" />
-          {kicker}
-        </div>
-      ) : null}
-      <h2 className="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">
-        {title}
-      </h2>
-      {sub ? <p className="mt-3 text-pretty text-base text-white/70 md:text-lg">{sub}</p> : null}
-    </div>
-  );
-}
+    <!-- HERO -->
+    <main id="top" class="relative">
+      <!-- subtle glow background -->
+      <div class="pointer-events-none absolute inset-0 overflow-hidden">
+        <div class="absolute -top-32 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-yellow-500/10 blur-3xl"></div>
+        <div class="absolute -bottom-48 left-1/3 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl"></div>
+        <div class="absolute -bottom-40 right-0 h-[520px] w-[620px] rounded-full bg-white/5 blur-3xl"></div>
+      </div>
 
-function Pill({ icon: Icon, text }: { icon: React.ElementType; text: string }) {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
-      <Icon className="h-4 w-4 text-yellow-300" />
-      <span>{text}</span>
-    </div>
-  );
-}
+      <section class="relative mx-auto max-w-6xl px-4 pb-16 pt-14 md:pb-24 md:pt-20">
+        <div class="grid items-center gap-10 md:grid-cols-2">
+          <div>
+            <h1 class="text-balance text-4xl font-extrabold tracking-tight md:text-6xl">
+              <span class="text-white">No Selling Fees.</span><br/>
+              <span class="text-yellow-300">Just $20/month.</span>
+            </h1>
 
-function Button({
-  children,
-  href,
-  variant = "primary",
-  size = "md",
-}: {
-  children: React.ReactNode;
-  href?: string;
-  variant?: "primary" | "secondary" | "ghost";
-  size?: "md" | "lg";
-}) {
-  const base =
-    "inline-flex items-center justify-center rounded-2xl font-semibold transition focus:outline-none focus:ring-2 focus:ring-yellow-400/60 focus:ring-offset-2 focus:ring-offset-black";
-  const sizes = {
-    md: "px-4 py-2 text-sm",
-    lg: "px-5 py-3 text-sm md:text-base",
-  };
-  const variants = {
-    primary:
-      "bg-yellow-400 text-black hover:bg-yellow-300 shadow-[0_12px_32px_rgba(255,215,0,0.18)]",
-    secondary:
-      "border border-white/15 bg-white/5 text-white hover:bg-white/10",
-    ghost: "text-white/80 hover:text-white",
-  };
+            <p class="mt-5 max-w-xl text-pretty text-base text-white/75 md:text-lg">
+              The #1 Sports &amp; TCG Card Discord Marketplace — built for serious collectors.
+              Buy. Sell. Trade. Connect.
+            </p>
 
-  const cls = classNames(base, sizes[size], variants[variant]);
-
-  if (href) {
-    return (
-      <a href={href} className={cls} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noreferrer" : undefined}>
-        {children}
-      </a>
-    );
-  }
-
-  return <button className={cls}>{children}</button>;
-}
-
-function Card({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return (
-    <div className={classNames("rounded-2xl border border-white/10 bg-white/[0.04] shadow-sm", className)}>
-      {children}
-    </div>
-  );
-}
-
-function AccordionItem({
-  title,
-  children,
-}: {
-  title: string;
-  children: React.ReactNode;
-}) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.03]">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left"
-      >
-        <span className="text-sm font-semibold text-white">{title}</span>
-        <ChevronDown className={classNames("h-4 w-4 text-white/70 transition", open && "rotate-180")} />
-      </button>
-      {open ? (
-        <div className="px-5 pb-5 text-sm leading-relaxed text-white/75">{children}</div>
-      ) : null}
-    </div>
-  );
-}
-
-export default function HobbyHangoutHomepage() {
-  const year = useMemo(() => new Date().getFullYear(), []);
-
-  return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Top bar */}
-      <header className="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <a href="#top" className="flex items-center gap-3">
-            {/* Replace with your logo asset */}
-            <div className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5">
-              <span className="text-xs font-extrabold text-yellow-300">THH</span>
+            <div class="mt-6 flex flex-wrap gap-2">
+              <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
+                <span class="text-yellow-300">✓</span> Verified sellers + vouches
+              </div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
+                <span class="text-yellow-300">✓</span> Middleman system
+              </div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
+                <span class="text-yellow-300">✓</span> Moderators enforce deadlines
+              </div>
             </div>
-            <div className="leading-tight">
-              <div className="text-sm font-extrabold tracking-tight">THE HOBBY HANGOUT</div>
-              <div className="text-[11px] text-white/60">Where The Hobby Lives</div>
-            </div>
-          </a>
 
-          <nav className="hidden items-center gap-6 text-sm text-white/70 md:flex">
-            {NAV.map((n) => (
-              <a key={n.href} href={n.href} className="hover:text-white">
-                {n.label}
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
+                 target="_blank" rel="noreferrer"
+                 class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
+                Start 7-Day Free Trial
               </a>
-            ))}
-          </nav>
+              <a href="#how"
+                 class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                See How It Works
+              </a>
+            </div>
 
-          <div className="flex items-center gap-2">
-            <Button href={WHOP_TRIAL_LINK} size="md" variant="primary">
-              Start 7-Day Free Trial
-            </Button>
+            <p class="mt-4 text-xs text-white/60">
+              Cancel anytime. No commitment. Access stays active through your billing period.
+            </p>
+
+            <a href="https://www.instagram.com/joinhobbyhangout"
+               target="_blank" rel="noreferrer"
+               class="mt-5 inline-flex items-center gap-2 text-xs text-white/60 hover:text-white">
+              Follow on Instagram ↗
+            </a>
+          </div>
+
+          <!-- right side panel -->
+          <div class="space-y-4">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-xs font-semibold text-yellow-300">THE HOBBY HANGOUT</div>
+                  <div class="mt-1 text-lg font-extrabold">Modern marketplace, inside Discord</div>
+                  <div class="mt-1 text-sm text-white/70">Fast deals • Clear rules • Real accountability</div>
+                </div>
+                <div class="rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-white/70">$20 / month</div>
+              </div>
+
+              <div class="mt-6 grid gap-3">
+                <div class="rounded-2xl border border-white/10 bg-black/40 p-4">
+                  <div class="text-sm font-semibold">No Selling Fees</div>
+                  <div class="mt-1 text-sm text-white/70">Keep more of every sale—no % cut.</div>
+                </div>
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-2xl border border-white/10 bg-black/40 p-4">
+                    <div class="text-sm font-semibold">Verified tiers</div>
+                    <div class="mt-1 text-sm text-white/70">Vouches tracked from in-server transactions.</div>
+                  </div>
+                  <div class="rounded-2xl border border-white/10 bg-black/40 p-4">
+                    <div class="text-sm font-semibold">Middleman</div>
+                    <div class="mt-1 text-sm text-white/70">Available to keep deals secure.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex items-center justify-between">
+                <div class="text-xs text-white/60">Powered by Whop for billing + access</div>
+                <a href="#partners" class="text-xs font-semibold text-yellow-300 hover:text-yellow-200">Learn more</a>
+              </div>
+            </div>
+
+            <div class="grid gap-3 sm:grid-cols-2">
+              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <div class="text-xs font-semibold text-white/60">Traditional marketplaces</div>
+                <div class="mt-2 space-y-2 text-sm text-white/75">
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> Up to 13–14% fees</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> Less enforcement</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> Less accountability</div>
+                </div>
+              </div>
+              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                <div class="text-xs font-semibold text-white/60">The Hobby Hangout</div>
+                <div class="mt-2 space-y-2 text-sm text-white/75">
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> $20/month flat</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> $0 selling fees</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> Rules + verification + middleman</div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
-      </header>
+      </section>
 
-      {/* Hero */}
-      <main id="top" className="relative">
-        <GlowBG />
-        <section className="relative mx-auto max-w-6xl px-4 pb-16 pt-14 md:pb-24 md:pt-20">
-          <div className="grid items-center gap-10 md:grid-cols-2">
-            <div>
-              <motion.h1
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="text-balance text-4xl font-extrabold tracking-tight md:text-6xl"
-              >
-                <span className="text-white">No Selling Fees.</span>
-                <br />
-                <span className="text-yellow-300">Just $20/month.</span>
-              </motion.h1>
+      <!-- MARKETPLACE CHANNELS (PRIMARY ONLY) -->
+      <section id="marketplace" class="border-t border-white/10 bg-gradient-to-b from-black to-black/95">
+        <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div class="mx-auto mb-10 max-w-3xl text-center">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+              Primary Marketplaces
+            </div>
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+              Organized channels built for speed
+            </h2>
+            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+              Post in the right channel, keep pricing clear, and close deals faster. Below are the primary marketplace channels.
+            </p>
+          </div>
 
-              <p className="mt-5 max-w-xl text-pretty text-base text-white/75 md:text-lg">
-                The #1 Sports &amp; TCG Card Discord Marketplace — built for serious collectors.
-                Buy. Sell. Trade. Connect.
-              </p>
-
-              <div className="mt-6 flex flex-wrap gap-2">
-                <Pill icon={ShieldCheck} text="Verified sellers + vouches" />
-                <Pill icon={Lock} text="Middleman system" />
-                <Pill icon={Check} text="Moderators enforce deadlines" />
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Primary channels list -->
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#football-50-plus</div>
+                  <div class="mt-1 text-sm text-white/70">$50+</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
               </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
 
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button href={WHOP_TRIAL_LINK} size="lg" variant="primary">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#basketball-50-plus</div>
+                  <div class="mt-1 text-sm text-white/70">$50+</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#baseball-50-plus</div>
+                  <div class="mt-1 text-sm text-white/70">$50+</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#nfl-nba-10-50</div>
+                  <div class="mt-1 text-sm text-white/70">$10–$50</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#baseball-10-50</div>
+                  <div class="mt-1 text-sm text-white/70">$10–$50</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#all-sports-10-under</div>
+                  <div class="mt-1 text-sm text-white/70">$10 & under</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#all-sports-1000-plus</div>
+                  <div class="mt-1 text-sm text-white/70">$1,000+</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#pokemon-slabs-only</div>
+                  <div class="mt-1 text-sm text-white/70">Slabs</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#pokemon-raw-only</div>
+                  <div class="mt-1 text-sm text-white/70">Raw</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-sm font-extrabold tracking-tight">#2025-prizm-football</div>
+                  <div class="mt-1 text-sm text-white/70">Set/Release</div>
+                </div>
+                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+              </div>
+              <div class="mt-4 text-sm text-white/70">Use clear pricing, disclose condition, follow deadlines.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section id="how" class="border-t border-white/10">
+        <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div class="mx-auto mb-10 max-w-3xl text-center">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+              Fast setup
+            </div>
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">How it works</h2>
+            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+              Sign up through Whop (secure billing + access), connect Discord, and you’re in.
+            </p>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <ol class="space-y-4">
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">1</div><div class="text-sm text-white/80">Click the Sign Up button.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">2</div><div class="text-sm text-white/80">You’ll be redirected to our Whop checkout page.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">3</div><div class="text-sm text-white/80">Create a Whop account (or log in).</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">4</div><div class="text-sm text-white/80">Start your 7-day free trial / complete subscription.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">5</div><div class="text-sm text-white/80">Connect your Discord account when prompted.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">6</div><div class="text-sm text-white/80">Access is granted automatically to the server.</div></li>
+              </ol>
+
+              <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                <a href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
+                   target="_blank" rel="noreferrer"
+                   class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
                   Start 7-Day Free Trial
-                </Button>
-                <Button href="#how" size="lg" variant="secondary">
-                  See How It Works
-                </Button>
-              </div>
-
-              <p className="mt-4 text-xs text-white/60">
-                Cancel anytime. No commitment. Access stays active through your billing period.
-              </p>
-
-              <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-white/60">
-                <a href={IG_LINK} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-white">
-                  Follow on Instagram <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+                <a href="#faq"
+                   class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                  Signup help (FAQ)
                 </a>
               </div>
             </div>
 
-            {/* Hero visual */}
-            <div className="relative">
-              <Card className="overflow-hidden">
-                <div className="relative bg-gradient-to-br from-white/5 to-white/0 p-6">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="text-xs font-semibold text-yellow-300">THE HOBBY HANGOUT</div>
-                      <div className="mt-1 text-lg font-extrabold">Modern marketplace, inside Discord</div>
-                      <div className="mt-1 text-sm text-white/70">Fast deals • Clear rules • Real accountability</div>
-                    </div>
-                    <div className="rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-white/70">
-                      $20 / month
-                    </div>
-                  </div>
-
-                  <div className="mt-6 grid gap-3">
-                    <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-                      <div className="text-sm font-semibold">No Selling Fees</div>
-                      <div className="mt-1 text-sm text-white/70">Keep more of every sale—no % cut.</div>
-                    </div>
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-                        <div className="text-sm font-semibold">Verified tiers</div>
-                        <div className="mt-1 text-sm text-white/70">Vouches tracked from in-server transactions.</div>
-                      </div>
-                      <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-                        <div className="text-sm font-semibold">Middleman</div>
-                        <div className="mt-1 text-sm text-white/70">Available to keep deals secure.</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-6 flex items-center justify-between">
-                    <div className="text-xs text-white/60">Powered by Whop for billing + access</div>
-                    <a href="#partners" className="text-xs font-semibold text-yellow-300 hover:text-yellow-200">
-                      Learn more
-                    </a>
-                  </div>
-                </div>
-              </Card>
-
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <Card className="p-4">
-                  <div className="text-xs font-semibold text-white/60">Traditional marketplaces</div>
-                  <div className="mt-2 space-y-2 text-sm text-white/75">
-                    <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-red-400" /> Up to 13–14% fees</div>
-                    <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-red-400" /> Less enforcement</div>
-                    <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-red-400" /> Less accountability</div>
-                  </div>
-                </Card>
-                <Card className="p-4">
-                  <div className="text-xs font-semibold text-white/60">The Hobby Hangout</div>
-                  <div className="mt-2 space-y-2 text-sm text-white/75">
-                    <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-green-400" /> $20/month flat</div>
-                    <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-green-400" /> $0 selling fees</div>
-                    <div className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-green-400" /> Rules + verification + middleman</div>
-                  </div>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Marketplace */}
-        <section id="marketplace" className="relative border-t border-white/10 bg-gradient-to-b from-black to-black/95">
-          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-            <SectionTitle
-              kicker="Primary Marketplaces"
-              title="Organized channels built for speed"
-              sub="Post in the right channel, keep pricing clear, and close deals faster. Below are the primary marketplace channels." 
-            />
-
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {PRIMARY_MARKETPLACES.map((c) => (
-                <Card key={c.name} className="p-5">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <div className="text-sm font-extrabold tracking-tight">#{c.name}</div>
-                      <div className="mt-1 text-sm text-white/70">{c.note}</div>
-                    </div>
-                    <div className="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">
-                      Primary
-                    </div>
-                  </div>
-                  <div className="mt-4 text-sm text-white/70">
-                    Use clear pricing, disclose condition, and follow payment + shipping deadlines.
-                  </div>
-                </Card>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* How it works */}
-        <section id="how" className="relative border-t border-white/10">
-          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-            <SectionTitle
-              kicker="Fast setup"
-              title="How it works"
-              sub="Sign up through Whop (secure billing + access), connect Discord, and you’re in." 
-            />
-
-            <div className="grid gap-6 lg:grid-cols-2">
-              <Card className="p-6">
-                <ol className="space-y-4">
-                  {[
-                    "Click the Sign Up button.",
-                    "You’ll be redirected to our Whop checkout page.",
-                    "Create a Whop account (or log in).",
-                    "Start your 7-day free trial / complete subscription.",
-                    "Connect your Discord account when prompted.",
-                    "Access is granted automatically to the server.",
-                  ].map((step, i) => (
-                    <li key={i} className="flex gap-3">
-                      <div className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">
-                        {i + 1}
-                      </div>
-                      <div className="text-sm text-white/80">{step}</div>
-                    </li>
-                  ))}
-                </ol>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <Button href={WHOP_TRIAL_LINK} variant="primary" size="lg">
-                    Start 7-Day Free Trial
-                  </Button>
-                  <Button href="#faq" variant="secondary" size="lg">
-                    Signup help (FAQ)
-                  </Button>
-                </div>
-              </Card>
-
-              <div className="space-y-4">
-                <Card className="p-6">
-                  <div className="text-lg font-extrabold">What is Whop?</div>
-                  <p className="mt-2 text-sm leading-relaxed text-white/75">
-                    We use Whop to securely manage memberships, process subscription payments, and automatically grant access
-                    to our Discord community. It keeps billing, renewals, and access in one centralized platform.
-                  </p>
-                </Card>
-
-                <Card className="p-6">
-                  <div className="text-lg font-extrabold">Membership &amp; Billing</div>
-                  <div className="mt-4 space-y-3">
-                    <AccordionItem title="Cancel anytime">
-                      You can cancel your membership at any time from your account settings. There are no cancellation fees
-                      and no long-term contracts. Your access will remain active through the end of your current billing period.
-                    </AccordionItem>
-                    <AccordionItem title="No commitment">
-                      The 7-day free trial requires no long-term commitment. If you cancel before the trial ends, you will not be charged.
-                      Membership renews automatically after the trial unless canceled.
-                    </AccordionItem>
-                    <AccordionItem title="Refund policy">
-                      Because membership grants immediate access to the private marketplace and community, we do not offer refunds once a
-                      billing cycle has begun. If you experience a billing error or technical issue, contact support within 7 days and we will
-                      review it promptly.
-                    </AccordionItem>
-                  </div>
-                </Card>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Why join */}
-        <section id="why" className="relative border-t border-white/10 bg-gradient-to-b from-black/95 to-black">
-          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-            <SectionTitle
-              kicker="Value"
-              title="Why collectors join"
-              sub="A moderated marketplace with standards that protect buyers and sellers — without taking a % of your sale." 
-            />
-
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {[
-                {
-                  icon: ShieldCheck,
-                  title: "No selling fees",
-                  body: "Traditional marketplaces can take up to 13–14%. We charge $20/month — flat.",
-                },
-                {
-                  icon: Lock,
-                  title: "Middleman system",
-                  body: "Optional for everyone and required for new/unverified sellers to reduce risk.",
-                },
-                {
-                  icon: Check,
-                  title: "Moderated rules",
-                  body: "Payment deadlines, shipping expectations, and transparency standards are enforced.",
-                },
-                {
-                  icon: ShieldCheck,
-                  title: "Verified tiers + vouches",
-                  body: "Vouches are based on completed in-server transactions for accountability.",
-                },
-                {
-                  icon: Lock,
-                  title: "Buyer/seller protections",
-                  body: "Clear dispute process via tickets and a structured approach to enforcement.",
-                },
-                {
-                  icon: Sparkles,
-                  title: "Community",
-                  body: "Active discussion + market activity built around collectors who move cards.",
-                },
-              ].map((x) => (
-                <Card key={x.title} className="p-6">
-                  <div className="flex items-center gap-3">
-                    <div className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/5">
-                      <x.icon className="h-5 w-5 text-yellow-300" />
-                    </div>
-                    <div className="text-base font-extrabold">{x.title}</div>
-                  </div>
-                  <p className="mt-3 text-sm leading-relaxed text-white/75">{x.body}</p>
-                </Card>
-              ))}
-            </div>
-
-            <div className="mt-10 text-center">
-              <Button href={WHOP_TRIAL_LINK} size="lg" variant="primary">
-                Start 7-Day Free Trial
-              </Button>
-            </div>
-          </div>
-        </section>
-
-        {/* Rules & Safety */}
-        <section id="safety" className="relative border-t border-white/10">
-          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-            <SectionTitle
-              kicker="Trust"
-              title="Rules & safety"
-              sub="We keep the marketplace clean with structure: deadlines, transparency, and accountability." 
-            />
-
-            <div className="grid gap-6 lg:grid-cols-3">
-              <Card className="p-6">
-                <div className="text-lg font-extrabold">Payments &amp; deadlines</div>
-                <ul className="mt-3 space-y-2 text-sm text-white/75">
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Payments due within 12 hours of agreement.</li>
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Ship within 1–2 business days after payment.</li>
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Tracking within 48 hours (photo ok for PWE).</li>
-                </ul>
-              </Card>
-
-              <Card className="p-6">
-                <div className="text-lg font-extrabold">Listing standards</div>
-                <ul className="mt-3 space-y-2 text-sm text-white/75">
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Prices must be listed (no “net”).</li>
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Disclose flaws/damage clearly.</li>
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Post in the correct channel by tier/category.</li>
-                </ul>
-              </Card>
-
-              <Card className="p-6">
-                <div className="text-lg font-extrabold">Verification &amp; middleman</div>
-                <ul className="mt-3 space-y-2 text-sm text-white/75">
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Vouches are tied to completed in-server deals.</li>
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> New/unverified sellers follow stricter payment methods.</li>
-                  <li className="flex gap-2"><Check className="mt-0.5 h-4 w-4 text-yellow-300" /> Middleman is always available to reduce risk.</li>
-                </ul>
-              </Card>
-            </div>
-
-            <div className="mt-10 rounded-2xl border border-white/10 bg-white/[0.03] p-6">
-              <div className="text-sm font-semibold text-white">Want the full rules?</div>
-              <p className="mt-2 text-sm text-white/70">
-                Add your complete Marketplace Rules, Server Rules, Selling Requirements, and Marketplace Expectations on a dedicated
-                page (or a modal/accordion). This homepage section is the short version.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Partners */}
-        <section id="partners" className="relative border-t border-white/10 bg-gradient-to-b from-black to-black/95">
-          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-            <SectionTitle
-              kicker="Tools"
-              title="Partners"
-              sub="Perks and tools that help members make better decisions." 
-            />
-
-            <div className="grid gap-6 lg:grid-cols-2">
-              <Card className="p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className="text-lg font-extrabold">CardLadder (1 month free)</div>
-                    <p className="mt-2 text-sm leading-relaxed text-white/75">
-                      As a CardLadder affiliate, we partner with CardLadder to offer advanced trading-card price tracking and market analytics.
-                      Track values, set alerts, and make data-driven decisions.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-yellow-300">
-                    Affiliate
-                  </div>
-                </div>
-                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
-                  <Button href={CARDLADDER_LINK} variant="primary" size="lg">
-                    Get 1 Month Free
-                  </Button>
-                  <Button href={CARDLADDER_LINK} variant="secondary" size="lg">
-                    Learn more
-                  </Button>
-                </div>
-              </Card>
-
-              <Card className="p-6">
-                <div className="text-lg font-extrabold">More partnerships</div>
-                <p className="mt-2 text-sm leading-relaxed text-white/75">
-                  Use this space for future hobby partnerships (breakers, grading services, card shows, shipping label partners, etc.).
+            <div class="space-y-4">
+              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <div class="text-lg font-extrabold">What is Whop?</div>
+                <p class="mt-2 text-sm leading-relaxed text-white/75">
+                  We use Whop to securely manage memberships, process subscription payments, and automatically grant access to our Discord
+                  community. It keeps billing, renewals, and access in one centralized platform.
                 </p>
-                <div className="mt-5 rounded-2xl border border-white/10 bg-black/40 p-4 text-sm text-white/70">
-                  Example perk: shipping discounts • show meetups • exclusive drops
-                </div>
-              </Card>
+              </div>
+
+              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+                <div class="text-lg font-extrabold">Membership &amp; Billing</div>
+
+                <details class="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+                  <summary class="cursor-pointer text-sm font-semibold">Cancel anytime</summary>
+                  <div class="mt-3 text-sm text-white/75">
+                    You can cancel your membership at any time from your account settings. There are no cancellation fees and no long-term contracts.
+                    Your access will remain active through the end of your current billing period.
+                  </div>
+                </details>
+
+                <details class="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+                  <summary class="cursor-pointer text-sm font-semibold">No commitment</summary>
+                  <div class="mt-3 text-sm text-white/75">
+                    The 7-day free trial requires no long-term commitment. If you cancel before the trial ends, you will not be charged.
+                    Membership renews automatically after the trial unless canceled.
+                  </div>
+                </details>
+
+                <details class="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+                  <summary class="cursor-pointer text-sm font-semibold">Refund policy</summary>
+                  <div class="mt-3 text-sm text-white/75">
+                    Because membership grants immediate access to the private marketplace and community, we do not offer refunds once a billing cycle has begun.
+                    If you experience a billing error or technical issue, contact support within 7 days and we will review it promptly.
+                  </div>
+                </details>
+              </div>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* FAQ */}
-        <section id="faq" className="relative border-t border-white/10">
-          <div className="mx-auto max-w-6xl px-4 py-16 md:py-20">
-            <SectionTitle
-              kicker="Help"
-              title="FAQ"
-              sub="Quick answers for signup, payments, and safe transactions." 
-            />
+      <!-- WHY JOIN -->
+      <section id="why" class="border-t border-white/10 bg-gradient-to-b from-black/95 to-black">
+        <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div class="mx-auto mb-10 max-w-3xl text-center">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+              Value
+            </div>
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">Why collectors join</h2>
+            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+              A moderated marketplace with standards that protect buyers and sellers — without taking a % of your sale.
+            </p>
+          </div>
 
-            <div className="grid gap-4">
-              <AccordionItem title="What if I have a Discord or Whop issue?">
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-base font-extrabold">No selling fees</div>
+              <p class="mt-3 text-sm text-white/75">Traditional marketplaces can take up to 13–14%. We charge $20/month — flat.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-base font-extrabold">Middleman system</div>
+              <p class="mt-3 text-sm text-white/75">Optional for everyone and required for new/unverified sellers to reduce risk.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-base font-extrabold">Moderated rules</div>
+              <p class="mt-3 text-sm text-white/75">Payment deadlines, shipping expectations, and transparency standards are enforced.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-base font-extrabold">Verified tiers + vouches</div>
+              <p class="mt-3 text-sm text-white/75">Vouches are based on completed in-server transactions for accountability.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-base font-extrabold">Buyer/seller protections</div>
+              <p class="mt-3 text-sm text-white/75">Clear dispute process via tickets and a structured approach to enforcement.</p>
+            </div>
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-base font-extrabold">Community</div>
+              <p class="mt-3 text-sm text-white/75">Active discussion + market activity built around collectors who move cards.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- RULES & SAFETY -->
+      <section id="safety" class="border-t border-white/10">
+        <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div class="mx-auto mb-10 max-w-3xl text-center">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+              Trust
+            </div>
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">Rules &amp; safety</h2>
+            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+              We keep the marketplace clean with structure: deadlines, transparency, and accountability.
+            </p>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-3">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-lg font-extrabold">Payments &amp; deadlines</div>
+              <ul class="mt-3 space-y-2 text-sm text-white/75">
+                <li>✓ Payments due within 12 hours of agreement.</li>
+                <li>✓ Ship within 1–2 business days after payment.</li>
+                <li>✓ Tracking within 48 hours (photo ok for PWE).</li>
+              </ul>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-lg font-extrabold">Listing standards</div>
+              <ul class="mt-3 space-y-2 text-sm text-white/75">
+                <li>✓ Prices must be listed (no “net”).</li>
+                <li>✓ Disclose flaws/damage clearly.</li>
+                <li>✓ Post in the correct channel by tier/category.</li>
+              </ul>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-lg font-extrabold">Verification &amp; middleman</div>
+              <ul class="mt-3 space-y-2 text-sm text-white/75">
+                <li>✓ Vouches are tied to completed in-server deals.</li>
+                <li>✓ New/unverified sellers follow stricter payment methods.</li>
+                <li>✓ Middleman is always available to reduce risk.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PARTNERS -->
+      <section id="partners" class="border-t border-white/10 bg-gradient-to-b from-black to-black/95">
+        <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div class="mx-auto mb-10 max-w-3xl text-center">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+              Tools
+            </div>
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">Partners</h2>
+            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+              Perks and tools that help members make better decisions.
+            </p>
+          </div>
+
+          <div class="grid gap-6 lg:grid-cols-2">
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-lg font-extrabold">CardLadder (1 month free)</div>
+                  <p class="mt-2 text-sm text-white/75">
+                    Advanced trading-card price tracking and market analytics. Track values, set alerts, and make data-driven decisions.
+                  </p>
+                </div>
+                <div class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-yellow-300">Affiliate</div>
+              </div>
+
+              <div class="mt-5 flex flex-col gap-3 sm:flex-row">
+                <a href="https://app.cardladder.com/signup?promo=Break&via=HobbyHangout"
+                   target="_blank" rel="noreferrer"
+                   class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
+                  Get 1 Month Free
+                </a>
+                <a href="https://app.cardladder.com/signup?promo=Break&via=HobbyHangout"
+                   target="_blank" rel="noreferrer"
+                   class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                  Learn more
+                </a>
+              </div>
+            </div>
+
+            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+              <div class="text-lg font-extrabold">More partnerships</div>
+              <p class="mt-2 text-sm text-white/75">
+                Add future perks here (grading, shows, shipping discounts, exclusive drops).
+              </p>
+              <div class="mt-5 rounded-2xl border border-white/10 bg-black/40 p-4 text-sm text-white/70">
+                Example perk: shipping discounts • show meetups • exclusive drops
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="border-t border-white/10">
+        <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <div class="mx-auto mb-10 max-w-3xl text-center">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+              Help
+            </div>
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">FAQ</h2>
+            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+              Quick answers for signup, payments, and safe transactions.
+            </p>
+          </div>
+
+          <div class="grid gap-4">
+            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+              <summary class="cursor-pointer text-sm font-semibold">What if I have a Discord or Whop issue?</summary>
+              <div class="mt-3 text-sm text-white/75">
                 We’re not Discord or Whop support. If you hit a technical issue, we’re happy to suggest fixes, but you may need to contact
                 Discord/Whop support for account-level problems.
-              </AccordionItem>
-              <AccordionItem title="Can I cancel during the free trial?">
-                Yes. Cancel before the trial ends and you will not be charged. If you cancel after the trial, your membership renews
-                monthly unless canceled.
-              </AccordionItem>
-              <AccordionItem title="Why do you use Whop?">
-                Whop manages memberships, billing, renewals, and automatically unlocks Discord access. It keeps everything secure and
-                centralized.
-              </AccordionItem>
-              <AccordionItem title="How do I get access after purchase?">
-                After checkout, Whop will prompt you to connect Discord. Once connected, access is granted automatically.
-              </AccordionItem>
-            </div>
-
-            <div className="mt-10 flex flex-col items-center gap-3">
-              <Button href={WHOP_TRIAL_LINK} size="lg" variant="primary">
-                Start 7-Day Free Trial
-              </Button>
-              <div className="text-xs text-white/60">
-                Have a question not listed? Point this button to your ticket/support channel link.
               </div>
-            </div>
+            </details>
+
+            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+              <summary class="cursor-pointer text-sm font-semibold">Can I cancel during the free trial?</summary>
+              <div class="mt-3 text-sm text-white/75">
+                Yes. Cancel before the trial ends and you will not be charged. Membership renews monthly unless canceled.
+              </div>
+            </details>
+
+            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+              <summary class="cursor-pointer text-sm font-semibold">Why do you use Whop?</summary>
+              <div class="mt-3 text-sm text-white/75">
+                Whop manages memberships, billing, renewals, and automatically unlocks Discord access. It keeps everything secure and centralized.
+              </div>
+            </details>
+
+            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+              <summary class="cursor-pointer text-sm font-semibold">How do I get access after purchase?</summary>
+              <div class="mt-3 text-sm text-white/75">
+                After checkout, Whop will prompt you to connect Discord. Once connected, access is granted automatically.
+              </div>
+            </details>
           </div>
-        </section>
 
-        {/* Footer */}
-        <footer className="border-t border-white/10 bg-black/90">
-          <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
-            <div>
-              <div className="text-sm font-extrabold">THE HOBBY HANGOUT</div>
-              <div className="mt-1 text-xs text-white/60">Where The Hobby Lives</div>
-              <p className="mt-3 text-sm text-white/70">
-                The #1 Sports &amp; TCG Card Discord Marketplace — $20/month, no selling fees.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 text-sm text-white/70">
-              {NAV.map((n) => (
-                <a key={n.href} href={n.href} className="hover:text-white">
-                  {n.label}
-                </a>
-              ))}
-              <a href={IG_LINK} target="_blank" rel="noreferrer" className="hover:text-white">
-                Instagram
-              </a>
-            </div>
-
-            <div className="flex flex-col items-start gap-3">
-              <Button href={WHOP_TRIAL_LINK} variant="primary" size="lg">
-                Start 7-Day Free Trial
-              </Button>
-              <div className="text-xs text-white/60">© {year} The Hobby Hangout. Powered by Whop.</div>
-            </div>
+          <div class="mt-10 flex flex-col items-center gap-3">
+            <a href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
+               target="_blank" rel="noreferrer"
+               class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
+              Start 7-Day Free Trial
+            </a>
           </div>
-        </footer>
-      </main>
-    </div>
-  );
-}
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="border-t border-white/10 bg-black/90">
+        <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
+          <div>
+            <div class="text-sm font-extrabold">THE HOBBY HANGOUT</div>
+            <div class="mt-1 text-xs text-white/60">Where The Hobby Lives</div>
+            <p class="mt-3 text-sm text-white/70">
+              The #1 Sports &amp; TCG Card Discord Marketplace — $20/month, no selling fees.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 text-sm text-white/70">
+            <a href="#marketplace" class="hover:text-white">Marketplace</a>
+            <a href="#how" class="hover:text-white">How it Works</a>
+            <a href="#why" class="hover:text-white">Why Join</a>
+            <a href="#safety" class="hover:text-white">Rules & Safety</a>
+            <a href="#partners" class="hover:text-white">Partners</a>
+            <a href="#faq" class="hover:text-white">FAQ</a>
+            <a href="https://www.instagram.com/joinhobbyhangout" target="_blank" rel="noreferrer" class="hover:text-white">Instagram</a>
+          </div>
+
+          <div class="flex flex-col items-start gap-3">
+            <a href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
+               target="_blank" rel="noreferrer"
+               class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
+              Start 7-Day Free Trial
+            </a>
+            <div class="text-xs text-white/60">© <span id="year"></span> The Hobby Hangout. Powered by Whop.</div>
+          </div>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
