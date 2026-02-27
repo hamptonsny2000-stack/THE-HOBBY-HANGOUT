@@ -1,4 +1,4 @@
-<!doctype html> 
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -8,350 +8,394 @@
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Optional: nicer font -->
+    <!-- Brand font (tech/condensed) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+      // Brand tokens (black + metallic + yellow)
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Oxanium', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'Arial', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                bg: '#000000',
+                panel: 'rgba(255,255,255,0.04)',
+                panel2: 'rgba(255,255,255,0.03)',
+                border: 'rgba(255,255,255,0.12)',
+                text: '#F5F6F7',
+                muted: 'rgba(245,246,247,0.72)',
+                metal1: '#F3F4F6',
+                metal2: '#BFC5CD',
+                metal3: '#8B949E',
+                yellow: '#F5D000',
+                yellowSoft: '#FFE45C',
+                yellowDim: 'rgba(245,208,0,0.12)',
+                glow: 'rgba(245,208,0,0.35)',
+              },
+            },
+            boxShadow: {
+              glow: '0 0 0 1px rgba(245,208,0,0.35), 0 10px 30px rgba(245,208,0,0.08)',
+            },
+          },
+        },
+      };
+    </script>
 
     <style>
-      html, body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      html, body { font-family: Oxanium, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
+      /* Metallic headline text */
+      .text-metal {
+        background: linear-gradient(180deg, #ffffff 0%, #cfd5dc 35%, #8b949e 60%, #f3f4f6 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.35);
+      }
+
+      /* Subtle yellow edge glow for emphasis lines/badges */
+      .edge-glow {
+        box-shadow: 0 0 0 1px rgba(245,208,0,0.30), 0 18px 50px rgba(245,208,0,0.08);
+      }
     </style>
   </head>
 
-  <body class="bg-black text-white">
+  <body class="bg-brand-bg text-brand-text">
     <!-- NAV -->
-    <header class="sticky top-0 z-50 border-b border-white/10 bg-black/70 backdrop-blur">
+    <header class="sticky top-0 z-50 border-b border-brand-border bg-brand-bg/70 backdrop-blur">
       <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <a href="#top" class="flex items-center">
-  <img 
-    src="hobby logo.png"
-    alt="The Hobby Hangout Logo"
-    class="h-24 w-auto object-contain"
-  />
-</a>
+          <img
+            src="hobby logo.png"
+            alt="The Hobby Hangout Logo"
+            class="h-24 w-auto object-contain"
+          />
+        </a>
 
-        <nav class="hidden items-center gap-6 text-sm text-white/70 md:flex">
-          <a href="#marketplace" class="hover:text-white">Marketplace</a>
-          <a href="#how" class="hover:text-white">How it Works</a>
-          <a href="#why" class="hover:text-white">Why Join</a>
-          <a href="#safety" class="hover:text-white">Rules & Safety</a>
-          <a href="#partnerships" class="hover:text-white">Partnerships</a>
-          <a href="#faq" class="hover:text-white">FAQ</a>
+        <nav class="hidden items-center gap-6 text-sm text-brand-muted md:flex">
+          <a href="#marketplace" class="hover:text-brand-text">Marketplace</a>
+          <a href="#how" class="hover:text-brand-text">How it Works</a>
+          <a href="#why" class="hover:text-brand-text">Why Join</a>
+          <a href="#safety" class="hover:text-brand-text">Rules & Safety</a>
+          <a href="#partnerships" class="hover:text-brand-text">Partnerships</a>
+          <a href="#faq" class="hover:text-brand-text">FAQ</a>
         </nav>
 
         <a
           href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
           target="_blank" rel="noreferrer"
-          class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-4 py-2 text-sm font-semibold text-black hover:bg-yellow-300"
+          class="inline-flex items-center justify-center rounded-2xl bg-brand-yellow px-4 py-2 text-sm font-semibold text-black hover:bg-brand-yellowSoft shadow-glow"
         >
           Start 7-Day Free Trial
         </a>
       </div>
     </header>
 
-   <!-- HERO -->
-<main id="top" class="relative">
-  <!-- subtle glow background -->
-  <div class="pointer-events-none absolute inset-0 overflow-hidden">
-    <div class="absolute -top-32 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-yellow-500/10 blur-3xl"></div>
-    <div class="absolute -bottom-48 left-1/3 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-yellow-400/10 blur-3xl"></div>
-    <div class="absolute -bottom-40 right-0 h-[520px] w-[620px] rounded-full bg-white/5 blur-3xl"></div>
-  </div>
-
-  <section class="relative mx-auto max-w-6xl px-4 pb-16 pt-14 md:pb-24 md:pt-20">
-    <div class="grid items-center gap-10 md:grid-cols-2">
-
-      <!-- LEFT COLUMN -->
-      <div>
-        <h1 class="text-balance text-4xl font-extrabold tracking-tight md:text-6xl">
-          <span class="text-white">No Selling Fees.</span><br/>
-          <span class="text-yellow-300">Just $20/month.</span>
-        </h1>
-
-        <p class="mt-5 max-w-xl text-pretty text-base text-white/75 md:text-lg">
-          TEST TEST TEST TEST TESTTTTTTTTTT
-        </p>
-
-        <div class="mt-6 flex flex-wrap gap-2">
-          <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
-            <span class="text-yellow-300">✓</span> Verified sellers
-          </div>
-          <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
-            <span class="text-yellow-300">✓</span> Insured Deals
-          </div>
-          <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80">
-            <span class="text-yellow-300">✓</span> Active Moderation
-          </div>
-        </div>
-
-        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
-             target="_blank" rel="noreferrer"
-             class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
-            Start 7-Day Free Trial
-          </a>
-          <a href="#how"
-             class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
-            See How It Works
-          </a>
-        </div>
-
-        <p class="mt-4 text-xs text-white/60">
-          Cancel anytime. No commitment. Access stays active through your billing period.
-        </p>
+    <!-- HERO -->
+    <main id="top" class="relative">
+      <!-- subtle glow background -->
+      <div class="pointer-events-none absolute inset-0 overflow-hidden">
+        <div class="absolute -top-32 left-1/2 h-[520px] w-[820px] -translate-x-1/2 rounded-full bg-brand-yellowDim blur-3xl"></div>
+        <div class="absolute -bottom-48 left-1/3 h-[520px] w-[520px] -translate-x-1/2 rounded-full bg-brand-yellowDim blur-3xl"></div>
+        <div class="absolute -bottom-40 right-0 h-[520px] w-[620px] rounded-full bg-white/5 blur-3xl"></div>
       </div>
 
-      <!-- RIGHT COLUMN -->
-      <div class="space-y-4">
+      <section class="relative mx-auto max-w-6xl px-4 pb-16 pt-14 md:pb-24 md:pt-20">
+        <div class="grid items-center gap-10 md:grid-cols-2">
 
-        <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-          <div class="flex items-start justify-between gap-4">
-            <div>
-              <div class="text-xs font-semibold text-yellow-300">JOIN 4,000 HOBBY MEMBERS TODAY</div>
-              <div class="mt-1 text-lg font-extrabold">A Sports Card | TCG marketplace inside Discord</div>
-              <div class="mt-1 text-sm text-white/70">Buy. Sell. Trade. Connect.</div>
+          <!-- LEFT COLUMN -->
+          <div>
+            <h1 class="text-balance text-4xl font-extrabold tracking-tight md:text-6xl">
+              <span class="text-metal">No Selling Fees.</span><br/>
+              <span class="text-brand-yellow">Just $20/month.</span>
+            </h1>
+
+            <p class="mt-5 max-w-xl text-pretty text-base text-brand-muted md:text-lg">
+              4,000+ active members make us one of the largest Sports Card &amp; TCG Discord marketplaces.
+            </p>
+
+            <div class="mt-6 flex flex-wrap gap-2">
+              <div class="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-2 text-sm text-brand-muted">
+                <span class="text-brand-yellow">✓</span> Verified sellers
+              </div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-2 text-sm text-brand-muted">
+                <span class="text-brand-yellow">✓</span> Insured Deals
+              </div>
+              <div class="inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-2 text-sm text-brand-muted">
+                <span class="text-brand-yellow">✓</span> Active Moderation
+              </div>
             </div>
-            <div class="rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-white/70">$20 / month</div>
+
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <a href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
+                 target="_blank" rel="noreferrer"
+                 class="inline-flex items-center justify-center rounded-2xl bg-brand-yellow px-5 py-3 text-sm font-semibold text-black hover:bg-brand-yellowSoft shadow-glow">
+                Start 7-Day Free Trial
+              </a>
+              <a href="#how"
+                 class="inline-flex items-center justify-center rounded-2xl border border-brand-border bg-white/5 px-5 py-3 text-sm font-semibold text-brand-text hover:bg-white/10">
+                See How It Works
+              </a>
+            </div>
+
+            <p class="mt-4 text-xs text-white/60">
+              Cancel anytime. No commitment. Access stays active through your billing period.
+            </p>
           </div>
 
-          <div class="mt-6 grid gap-3">
-            <div class="rounded-2xl border border-white/10 bg-black/40 p-4">
-              <div class="text-sm font-semibold">No Selling Fees</div>
-              <div class="mt-1 text-sm text-white/70">We don’t take selling fees. When you sell your cards, we believe the profit should be yours, not ours.</div>
+          <!-- RIGHT COLUMN -->
+          <div class="space-y-4">
+
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6 edge-glow">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <div class="text-xs font-semibold text-brand-yellow">JOIN 4,000 HOBBY MEMBERS TODAY</div>
+                  <div class="mt-1 text-lg font-extrabold text-metal">A Sports Card | TCG marketplace inside Discord</div>
+                  <div class="mt-1 text-sm text-brand-muted">Buy. Sell. Trade. Connect.</div>
+                </div>
+                <div class="rounded-full border border-brand-border bg-black/40 px-3 py-1 text-xs text-brand-muted">$20 / month</div>
+              </div>
+
+              <div class="mt-6 grid gap-3">
+                <div class="rounded-2xl border border-brand-border bg-black/40 p-4">
+                  <div class="text-sm font-semibold text-metal">No Selling Fees</div>
+                  <div class="mt-1 text-sm text-brand-muted">We don’t take selling fees. When you sell your cards, we believe the profit should be yours, not ours.</div>
+                </div>
+                <div class="grid gap-3 sm:grid-cols-2">
+                  <div class="rounded-2xl border border-brand-border bg-black/40 p-4">
+                    <div class="text-sm font-semibold text-metal">Verified tiers</div>
+                    <div class="mt-1 text-sm text-brand-muted">Vouches tracked from in-server transactions.</div>
+                  </div>
+                  <div class="rounded-2xl border border-brand-border bg-black/40 p-4">
+                    <div class="text-sm font-semibold text-metal">Middleman</div>
+                    <div class="mt-1 text-sm text-brand-muted">Available to keep deals secure.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-6 flex items-center justify-between">
+                <div class="text-xs text-white/60">Powered by Whop | Secure Third Party Payment Processing</div>
+                <a href="#partners" class="text-xs font-semibold text-brand-yellow hover:text-brand-yellowSoft">Learn more</a>
+              </div>
             </div>
+
             <div class="grid gap-3 sm:grid-cols-2">
-              <div class="rounded-2xl border border-white/10 bg-black/40 p-4">
-                <div class="text-sm font-semibold">Verified tiers</div>
-                <div class="mt-1 text-sm text-white/70">Vouches tracked from in-server transactions.</div>
+              <div class="rounded-2xl border border-brand-border bg-brand-panel p-4">
+                <div class="text-xs font-semibold text-white/60">Traditional marketplaces</div>
+                <div class="mt-2 space-y-2 text-sm text-brand-muted">
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> Up to 13–14% in selling fees</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> You lose $130 on a $1,000 sale</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> They profit when you sell</div>
+                </div>
               </div>
-              <div class="rounded-2xl border border-white/10 bg-black/40 p-4">
-                <div class="text-sm font-semibold">Middleman</div>
-                <div class="mt-1 text-sm text-white/70">Available to keep deals secure.</div>
+              <div class="rounded-2xl border border-brand-border bg-brand-panel p-4 edge-glow">
+                <div class="text-xs font-semibold text-brand-yellow">The Hobby Hangout</div>
+                <div class="mt-2 space-y-2 text-sm text-brand-muted">
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> $20/month flat</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> $0 selling fees, keep your profits</div>
+                  <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> Moderated. Verified. Protected.</div>
+                </div>
               </div>
             </div>
+
           </div>
 
-          <div class="mt-6 flex items-center justify-between">
-            <div class="text-xs text-white/60">Powered by Whop | Secure Third Party Payment Processing</div>
-            <a href="#partners" class="text-xs font-semibold text-yellow-300 hover:text-yellow-200">Learn more</a>
-          </div>
         </div>
-
-        <div class="grid gap-3 sm:grid-cols-2">
-          <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-            <div class="text-xs font-semibold text-white/60">Traditional marketplaces</div>
-            <div class="mt-2 space-y-2 text-sm text-white/75">
-              <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> Up to 13–14% in selling fees</div>
-              <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> You lose $130 on a $1,000 sale</div>
-              <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-red-400"></span> They profit when you sell</div>
-            </div>
-          </div>
-          <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-            <div class="text-xs font-semibold text-white/60">The Hobby Hangout</div>
-            <div class="mt-2 space-y-2 text-sm text-white/75">
-              <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> $20/month flat</div>
-              <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> $0 selling fees, keep your profits</div>
-              <div class="flex items-center gap-2"><span class="h-1.5 w-1.5 rounded-full bg-green-400"></span> Moderated. Verified. Protected.</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-</main>
+      </section>
 
       <!-- MARKETPLACE CHANNELS (PRIMARY ONLY) -->
-      <section id="marketplace" class="border-t border-white/10 bg-gradient-to-b from-black to-black/95">
+      <section id="marketplace" class="border-t border-brand-border bg-gradient-to-b from-black to-black/95">
         <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div class="mx-auto mb-10 max-w-3xl text-center">
-            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-1 text-xs font-semibold text-brand-yellow">
               Primary Marketplaces
             </div>
-            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-metal md:text-4xl">
               Structured Marketplace Channels
-
             </h2>
-            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+            <p class="mt-3 text-pretty text-base text-brand-muted md:text-lg">
               Our marketplace channels are strategically built by sport and price tier so baseball, football, basketball, and TCG deals land exactly where serious buyers are looking.
             </p>
           </div>
 
           <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <!-- Primary channels list -->
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#football-50-plus</div>
-                  <div class="mt-1 text-sm text-white/70">$50+</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#football-50-plus</div>
+                  <div class="mt-1 text-sm text-brand-muted">$50+</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for football cards priced $50 and up.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for football cards priced $50 and up.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#basketball-50-plus</div>
-                  <div class="mt-1 text-sm text-white/70">$50+</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#basketball-50-plus</div>
+                  <div class="mt-1 text-sm text-brand-muted">$50+</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for basketball cards priced $50 and up.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for basketball cards priced $50 and up.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#baseball-50-plus</div>
-                  <div class="mt-1 text-sm text-white/70">$50+</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#baseball-50-plus</div>
+                  <div class="mt-1 text-sm text-brand-muted">$50+</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for baseball cards priced $50 and up.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for baseball cards priced $50 and up.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#nfl-nba-10-50</div>
-                  <div class="mt-1 text-sm text-white/70">$10–$50</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#nfl-nba-10-50</div>
+                  <div class="mt-1 text-sm text-brand-muted">$10–$50</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for NFL and NBA cards priced between $10 and $50.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for NFL and NBA cards priced between $10 and $50.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#baseball-10-50</div>
-                  <div class="mt-1 text-sm text-white/70">$10–$50</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#baseball-10-50</div>
+                  <div class="mt-1 text-sm text-brand-muted">$10–$50</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for baseball cards priced between $10 and $50.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for baseball cards priced between $10 and $50.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#all-sports-10-under</div>
-                  <div class="mt-1 text-sm text-white/70">$10 & under</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#all-sports-10-under</div>
+                  <div class="mt-1 text-sm text-brand-muted">$10 & under</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for sports cards priced under $10.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for sports cards priced under $10.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#all-sports-1000-plus</div>
-                  <div class="mt-1 text-sm text-white/70">$1,000+</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#all-sports-1000-plus</div>
+                  <div class="mt-1 text-sm text-brand-muted">$1,000+</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for sports cards priced $1,000 and up.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for sports cards priced $1,000 and up.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#pokemon-slabs-only</div>
-                  <div class="mt-1 text-sm text-white/70">Slabs</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#pokemon-slabs-only</div>
+                  <div class="mt-1 text-sm text-brand-muted">Slabs</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for graded Pokémon cards only.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for graded Pokémon cards only.</div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-5">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-5">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-sm font-extrabold tracking-tight">#pokemon-raw-only</div>
-                  <div class="mt-1 text-sm text-white/70">Raw</div>
+                  <div class="text-sm font-extrabold tracking-tight text-metal">#pokemon-raw-only</div>
+                  <div class="mt-1 text-sm text-brand-muted">Raw</div>
                 </div>
-                <div class="rounded-xl border border-white/10 bg-white/5 px-2 py-1 text-[11px] font-semibold text-yellow-300">Primary</div>
+                <div class="rounded-xl border border-brand-border bg-white/5 px-2 py-1 text-[11px] font-semibold text-brand-yellow">Primary</div>
               </div>
-              <div class="mt-4 text-sm text-white/70">A channel for raw Pokémon cards only.</div>
+              <div class="mt-4 text-sm text-brand-muted">A channel for raw Pokémon cards only.</div>
             </div>
 
-  
           </div>
         </div>
       </section>
 
       <!-- HOW IT WORKS -->
-      <section id="how" class="border-t border-white/10">
+      <section id="how" class="border-t border-brand-border">
         <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div class="mx-auto mb-10 max-w-3xl text-center">
-            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-1 text-xs font-semibold text-brand-yellow">
               Fast setup
             </div>
-            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">How it works</h2>
-            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-metal md:text-4xl">How it works</h2>
+            <p class="mt-3 text-pretty text-base text-brand-muted md:text-lg">
               Sign up through Whop, connect Discord, and you’re in.
             </p>
           </div>
 
           <div class="grid gap-6 lg:grid-cols-2">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
               <ol class="space-y-4">
-                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">1</div><div class="text-sm text-white/80">Click the Sign Up button.</div></li>
-                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">2</div><div class="text-sm text-white/80">You’ll be redirected to our Whop checkout page.</div></li>
-                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">3</div><div class="text-sm text-white/80">Create a Whop account (or log in).</div></li>
-                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">4</div><div class="text-sm text-white/80">Start your 7-day free trial / complete subscription.</div></li>
-                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">5</div><div class="text-sm text-white/80">Connect your Discord account when prompted.</div></li>
-                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-yellow-400 text-xs font-extrabold text-black">6</div><div class="text-sm text-white/80">Access is granted automatically to the server.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-brand-yellow text-xs font-extrabold text-black">1</div><div class="text-sm text-brand-muted">Click the Sign Up button.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-brand-yellow text-xs font-extrabold text-black">2</div><div class="text-sm text-brand-muted">You’ll be redirected to our Whop checkout page.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-brand-yellow text-xs font-extrabold text-black">3</div><div class="text-sm text-brand-muted">Create a Whop account (or log in).</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-brand-yellow text-xs font-extrabold text-black">4</div><div class="text-sm text-brand-muted">Start your 7-day free trial / complete subscription.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-brand-yellow text-xs font-extrabold text-black">5</div><div class="text-sm text-brand-muted">Connect your Discord account when prompted.</div></li>
+                <li class="flex gap-3"><div class="mt-0.5 grid h-7 w-7 place-items-center rounded-xl bg-brand-yellow text-xs font-extrabold text-black">6</div><div class="text-sm text-brand-muted">Access is granted automatically to the server.</div></li>
               </ol>
 
               <div class="mt-6 flex flex-col gap-3 sm:flex-row">
                 <a href="https://whop.com/checkout/2up59hBhhcGej5wMs9-uqIi-lS4V-DH8f-GYjpQhxOJzmK/"
                    target="_blank" rel="noreferrer"
-                   class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
+                   class="inline-flex items-center justify-center rounded-2xl bg-brand-yellow px-5 py-3 text-sm font-semibold text-black hover:bg-brand-yellowSoft shadow-glow">
                   Start 7-Day Free Trial
                 </a>
                 <a href="#faq"
-                   class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                   class="inline-flex items-center justify-center rounded-2xl border border-brand-border bg-white/5 px-5 py-3 text-sm font-semibold text-brand-text hover:bg-white/10">
                   Signup help (FAQ)
                 </a>
               </div>
             </div>
 
             <div class="space-y-4">
-              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                <div class="text-lg font-extrabold">What is Whop?</div>
-                <p class="mt-2 text-sm leading-relaxed text-white/75">
+              <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+                <div class="text-lg font-extrabold text-metal">What is Whop?</div>
+                <p class="mt-2 text-sm leading-relaxed text-brand-muted">
                   We use Whop to securely manage memberships, process subscription payments, and automatically grant access to our Discord
                   community. It keeps billing, renewals, and access in one centralized platform.
                 </p>
               </div>
 
-              <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-                <div class="text-lg font-extrabold">Membership &amp; Billing</div>
+              <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+                <div class="text-lg font-extrabold text-metal">Membership &amp; Billing</div>
 
-                <details class="mt-4 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+                <details class="mt-4 rounded-2xl border border-brand-border bg-brand-panel2 px-5 py-4">
                   <summary class="cursor-pointer text-sm font-semibold">Cancel anytime</summary>
-                  <div class="mt-3 text-sm text-white/75">
+                  <div class="mt-3 text-sm text-brand-muted">
                     You can cancel your membership at any time from your account settings. There are no cancellation fees and no long-term contracts.
                     Your access will remain active through the end of your current billing period.
                   </div>
                 </details>
 
-                <details class="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+                <details class="mt-3 rounded-2xl border border-brand-border bg-brand-panel2 px-5 py-4">
                   <summary class="cursor-pointer text-sm font-semibold">No commitment</summary>
-                  <div class="mt-3 text-sm text-white/75">
+                  <div class="mt-3 text-sm text-brand-muted">
                     The 7-day free trial requires no long-term commitment. If you cancel before the trial ends, you will not be charged.
                     Membership renews automatically after the trial unless canceled.
                   </div>
                 </details>
 
-                <details class="mt-3 rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+                <details class="mt-3 rounded-2xl border border-brand-border bg-brand-panel2 px-5 py-4">
                   <summary class="cursor-pointer text-sm font-semibold">Refund policy</summary>
-                  <div class="mt-3 text-sm text-white/75">
+                  <div class="mt-3 text-sm text-brand-muted">
                     Because membership grants immediate access to the private marketplace and community, we do not offer refunds once a billing cycle has begun.
                     If you experience a billing error or technical issue, contact support within 7 days and we will review it promptly.
                   </div>
@@ -363,85 +407,85 @@
       </section>
 
       <!-- WHY JOIN -->
-      <section id="why" class="border-t border-white/10 bg-gradient-to-b from-black/95 to-black">
+      <section id="why" class="border-t border-brand-border bg-gradient-to-b from-black/95 to-black">
         <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div class="mx-auto mb-10 max-w-3xl text-center">
-            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-1 text-xs font-semibold text-brand-yellow">
               Value
             </div>
-            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">Why collectors join</h2>
-            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
-            Keep more profit when you buy, sell, or trade without giving up a percentage of every deal.
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-metal md:text-4xl">Why collectors join</h2>
+            <p class="mt-3 text-pretty text-base text-brand-muted md:text-lg">
+              Keep more profit when you buy, sell, or trade without giving up a percentage of every deal.
             </p>
           </div>
 
           <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-base font-extrabold">No selling fees</div>
-              <p class="mt-3 text-sm text-white/75">Traditional marketplaces can take up to 13–14%. We charge $20/month — flat.</p>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-base font-extrabold text-metal">No selling fees</div>
+              <p class="mt-3 text-sm text-brand-muted">Traditional marketplaces can take up to 13–14%. We charge $20/month — flat.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-base font-extrabold">Middleman system</div>
-              <p class="mt-3 text-sm text-white/75">Optional for everyone and required for new/unverified sellers to reduce risk.</p>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-base font-extrabold text-metal">Middleman system</div>
+              <p class="mt-3 text-sm text-brand-muted">Optional for everyone and required for new/unverified sellers to reduce risk.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-base font-extrabold">Moderated rules</div>
-              <p class="mt-3 text-sm text-white/75">Payment deadlines, shipping expectations, and transparency standards are enforced.</p>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-base font-extrabold text-metal">Moderated rules</div>
+              <p class="mt-3 text-sm text-brand-muted">Payment deadlines, shipping expectations, and transparency standards are enforced.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-base font-extrabold">Verified tiers + vouches</div>
-              <p class="mt-3 text-sm text-white/75">Vouches are based on completed in-server transactions for accountability.</p>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-base font-extrabold text-metal">Verified tiers + vouches</div>
+              <p class="mt-3 text-sm text-brand-muted">Vouches are based on completed in-server transactions for accountability.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-base font-extrabold">Buyer/seller protections</div>
-              <p class="mt-3 text-sm text-white/75">Clear dispute process via tickets and a structured approach to enforcement.</p>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-base font-extrabold text-metal">Buyer/seller protections</div>
+              <p class="mt-3 text-sm text-brand-muted">Clear dispute process via tickets and a structured approach to enforcement.</p>
             </div>
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-base font-extrabold">Community</div>
-              <p class="mt-3 text-sm text-white/75">Active discussion + market activity built around collectors who move cards.</p>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-base font-extrabold text-metal">Community</div>
+              <p class="mt-3 text-sm text-brand-muted">Active discussion + market activity built around collectors who move cards.</p>
             </div>
           </div>
         </div>
       </section>
 
       <!-- RULES & SAFETY -->
-      <section id="safety" class="border-t border-white/10">
+      <section id="safety" class="border-t border-brand-border">
         <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div class="mx-auto mb-10 max-w-3xl text-center">
-            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-1 text-xs font-semibold text-brand-yellow">
               Trust
             </div>
-            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">Rules &amp; safety</h2>
-            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-metal md:text-4xl">Rules &amp; safety</h2>
+            <p class="mt-3 text-pretty text-base text-brand-muted md:text-lg">
               We keep the marketplace clean with structure: deadlines, transparency, and accountability.
             </p>
           </div>
 
           <div class="grid gap-6 lg:grid-cols-3">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-lg font-extrabold">Payments &amp; deadlines</div>
-              <ul class="mt-3 space-y-2 text-sm text-white/75">
-                <li>✓ Payments due within 12 hours of agreement.</li>
-                <li>✓ Ship within 1–2 business days after payment.</li>
-                <li>✓ Tracking within 48 hours.</li>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-lg font-extrabold text-metal">Payments &amp; deadlines</div>
+              <ul class="mt-3 space-y-2 text-sm text-brand-muted">
+                <li><span class="text-brand-yellow">✓</span> Payments due within 12 hours of agreement.</li>
+                <li><span class="text-brand-yellow">✓</span> Ship within 1–2 business days after payment.</li>
+                <li><span class="text-brand-yellow">✓</span> Tracking within 48 hours.</li>
               </ul>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-lg font-extrabold">Listing standards</div>
-              <ul class="mt-3 space-y-2 text-sm text-white/75">
-                <li>✓ Prices must be listed.</li>
-                <li>✓ Disclose flaws/damage clearly.</li>
-                <li>✓ Post in the correct channel by tier/category.</li>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-lg font-extrabold text-metal">Listing standards</div>
+              <ul class="mt-3 space-y-2 text-sm text-brand-muted">
+                <li><span class="text-brand-yellow">✓</span> Prices must be listed.</li>
+                <li><span class="text-brand-yellow">✓</span> Disclose flaws/damage clearly.</li>
+                <li><span class="text-brand-yellow">✓</span> Post in the correct channel by tier/category.</li>
               </ul>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-lg font-extrabold">Verification &amp; middleman</div>
-              <ul class="mt-3 space-y-2 text-sm text-white/75">
-                <li>✓ Vouches are tied to completed in-server deals.</li>
-                <li>✓ New/unverified sellers follow stricter payment methods.</li>
-                <li>✓ Middleman is always available to reduce risk.</li>
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-lg font-extrabold text-metal">Verification &amp; middleman</div>
+              <ul class="mt-3 space-y-2 text-sm text-brand-muted">
+                <li><span class="text-brand-yellow">✓</span> Vouches are tied to completed in-server deals.</li>
+                <li><span class="text-brand-yellow">✓</span> New/unverified sellers follow stricter payment methods.</li>
+                <li><span class="text-brand-yellow">✓</span> Middleman is always available to reduce risk.</li>
               </ul>
             </div>
           </div>
@@ -449,55 +493,55 @@
       </section>
 
       <!-- PARTNERSHIPS -->
-      <section id="partnerships" class="border-t border-white/10 bg-gradient-to-b from-black to-black/95">
+      <section id="partnerships" class="border-t border-brand-border bg-gradient-to-b from-black to-black/95">
         <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div class="mx-auto mb-10 max-w-3xl text-center">
-            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-1 text-xs font-semibold text-brand-yellow">
               Tools
             </div>
-            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">Partnerships</h2>
-            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-metal md:text-4xl">Partnerships</h2>
+            <p class="mt-3 text-pretty text-base text-brand-muted md:text-lg">
               Strategic partnerships that give members better tools and creators a way to earn recurring revenue.
             </p>
           </div>
 
           <div class="grid gap-6 lg:grid-cols-2">
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
               <div class="flex items-start justify-between gap-4">
                 <div>
-                  <div class="text-lg font-extrabold">CardLadder (1 month free)</div>
-                  <p class="mt-2 text-sm text-white/75">
+                  <div class="text-lg font-extrabold text-metal">CardLadder (1 month free)</div>
+                  <p class="mt-2 text-sm text-brand-muted">
                     Advanced trading-card price tracking and market analytics. Track values, set alerts, and make data-driven decisions.
                   </p>
                 </div>
-                <div class="rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-yellow-300">Affiliate</div>
+                <div class="rounded-2xl border border-brand-border bg-white/5 px-3 py-2 text-xs font-semibold text-brand-yellow">Affiliate</div>
               </div>
 
               <div class="mt-5 flex flex-col gap-3 sm:flex-row">
                 <a href="https://app.cardladder.com/signup?promo=Break&via=HobbyHangout"
                    target="_blank" rel="noreferrer"
-                   class="inline-flex items-center justify-center rounded-2xl bg-yellow-400 px-5 py-3 text-sm font-semibold text-black hover:bg-yellow-300">
+                   class="inline-flex items-center justify-center rounded-2xl bg-brand-yellow px-5 py-3 text-sm font-semibold text-black hover:bg-brand-yellowSoft shadow-glow">
                   Get 1 Month Free
                 </a>
                 <a href="https://www.cardladder.com/why-card-ladder"
                    target="_blank" rel="noreferrer"
-                   class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                   class="inline-flex items-center justify-center rounded-2xl border border-brand-border bg-white/5 px-5 py-3 text-sm font-semibold text-brand-text hover:bg-white/10">
                   Learn more
                 </a>
               </div>
             </div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/[0.04] p-6">
-              <div class="text-lg font-extrabold">Want to become an affiliate?</div>
-              <p class="mt-2 text-sm text-white/75">
-                Approved affiliates will receive a unique custom coupon code to share with their audience. Your code will unlock an exclusive offer for new members — a 14 day free trial! 
-                
+            <div class="rounded-2xl border border-brand-border bg-brand-panel p-6">
+              <div class="text-lg font-extrabold text-metal">Want to become an affiliate?</div>
+              <p class="mt-2 text-sm text-brand-muted">
+                Approved affiliates will receive a unique custom coupon code to share with their audience. Your code will unlock an exclusive offer for new members — a 14 day free trial!
+
                 Every time your code is used for a new Hobby Hangout signup, you’ll earn a percentage of the recurring monthly revenue generated by your referrals. The more active members you bring in, the more you earn.
-                
+
                 Top-performing affiliates may qualify for additional incentives, including increased commission rates, complimentary memberships, exclusive promotions, and other performance-based rewards.
               </p>
-              <div class="mt-5 rounded-2xl border border-white/10 bg-black/40 p-4 text-sm text-white/70">
-                EMAIL AFFILIATES@JOINHOBBYHANGOUT.COM FOR INQUIRIES 
+              <div class="mt-5 rounded-2xl border border-brand-border bg-black/40 p-4 text-sm text-brand-muted">
+                EMAIL AFFILIATES@JOINHOBBYHANGOUT.COM FOR INQUIRIES
               </div>
             </div>
           </div>
@@ -505,78 +549,75 @@
       </section>
 
       <!-- FAQ -->
-      <section id="faq" class="border-t border-white/10">
+      <section id="faq" class="border-t border-brand-border">
         <div class="mx-auto max-w-6xl px-4 py-16 md:py-20">
           <div class="mx-auto mb-10 max-w-3xl text-center">
-            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-yellow-300">
+            <div class="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-border bg-white/5 px-3 py-1 text-xs font-semibold text-brand-yellow">
               Help
             </div>
-            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-white md:text-4xl">FAQ</h2>
-            <p class="mt-3 text-pretty text-base text-white/70 md:text-lg">
+            <h2 class="text-balance text-3xl font-extrabold tracking-tight text-metal md:text-4xl">FAQ</h2>
+            <p class="mt-3 text-pretty text-base text-brand-muted md:text-lg">
               Quick answers for signup, payments, and safe transactions.
             </p>
           </div>
 
           <div class="grid gap-4">
-            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+            <details class="rounded-2xl border border-brand-border bg-brand-panel2 px-5 py-4">
               <summary class="cursor-pointer text-sm font-semibold">What if I have a Discord or Whop issue?</summary>
-              <div class="mt-3 text-sm text-white/75">
+              <div class="mt-3 text-sm text-brand-muted">
                 We’re not Discord or Whop support. If you hit a technical issue, we’re happy to suggest fixes, but you may need to contact
                 Discord/Whop support for account-level problems.
               </div>
             </details>
 
-            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+            <details class="rounded-2xl border border-brand-border bg-brand-panel2 px-5 py-4">
               <summary class="cursor-pointer text-sm font-semibold">Can I cancel during the free trial?</summary>
-              <div class="mt-3 text-sm text-white/75">
+              <div class="mt-3 text-sm text-brand-muted">
                 Yes. Cancel before the trial ends and you will not be charged. Membership renews monthly unless canceled.
               </div>
             </details>
 
-            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+            <details class="rounded-2xl border border-brand-border bg-brand-panel2 px-5 py-4">
               <summary class="cursor-pointer text-sm font-semibold">Why do you use Whop?</summary>
-              <div class="mt-3 text-sm text-white/75">
+              <div class="mt-3 text-sm text-brand-muted">
                 Whop manages memberships, billing, renewals, and automatically unlocks Discord access. It keeps everything secure and centralized.
               </div>
             </details>
 
-            <details class="rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4">
+            <details class="rounded-2xl border border-brand-border bg-brand-panel2 px-5 py-4">
               <summary class="cursor-pointer text-sm font-semibold">How do I get access after purchase?</summary>
-              <div class="mt-3 text-sm text-white/75">
+              <div class="mt-3 text-sm text-brand-muted">
                 After checkout, Whop will prompt you to connect Discord. Once connected, access is granted automatically.
               </div>
             </details>
           </div>
-
 
           </div>
         </div>
       </section>
 
       <!-- FOOTER -->
-      <footer class="border-t border-white/10 bg-black/90">
+      <footer class="border-t border-brand-border bg-black/90">
         <div class="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-3">
           <div>
-            <div class="text-sm font-extrabold">THE HOBBY HANGOUT</div>
-            <div class="mt-1 text-xs text-white/60">Where The Hobby Lives</div>
-            <p class="mt-3 text-sm text-white/70">
+            <div class="text-sm font-extrabold text-metal">THE HOBBY HANGOUT</div>
+            <div class="mt-1 text-xs text-brand-yellow">Where The Hobby Lives</div>
+            <p class="mt-3 text-sm text-brand-muted">
               4,000+ active members make us one of the largest Sports Card & TCG Discord marketplaces.
             </p>
           </div>
 
-          <div class="grid grid-cols-2 gap-3 text-sm text-white/70">
-            <a href="#marketplace" class="hover:text-white">Marketplace</a>
-            <a href="#how" class="hover:text-white">How it Works</a>
-            <a href="#why" class="hover:text-white">Why Join</a>
-            <a href="#safety" class="hover:text-white">Rules & Safety</a>
-            <a href="#partnerships" class="hover:text-white">Partnerships</a>
-            <a href="#faq" class="hover:text-white">FAQ</a>
-            <a href="https://www.instagram.com/joinhobbyhangout" target="_blank" rel="noreferrer" class="hover:text-white">Instagram</a>
+          <div class="grid grid-cols-2 gap-3 text-sm text-brand-muted">
+            <a href="#marketplace" class="hover:text-brand-text">Marketplace</a>
+            <a href="#how" class="hover:text-brand-text">How it Works</a>
+            <a href="#why" class="hover:text-brand-text">Why Join</a>
+            <a href="#safety" class="hover:text-brand-text">Rules & Safety</a>
+            <a href="#partnerships" class="hover:text-brand-text">Partnerships</a>
+            <a href="#faq" class="hover:text-brand-text">FAQ</a>
+            <a href="https://www.instagram.com/joinhobbyhangout" target="_blank" rel="noreferrer" class="hover:text-brand-text">Instagram</a>
           </div>
 
-    
-            <div class="text-xs text-white/60">© <span id="year"></span> The Hobby Hangout.</div>
-          </div>
+          <div class="text-xs text-white/60">© <span id="year"></span> The Hobby Hangout.</div>
         </div>
       </footer>
     </main>
