@@ -3,8 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="The #1 Sports & TCG Card Discord Marketplace. Over 6,500 members. Flat $20/month. $0 selling fees. Fully moderated." />
+  <meta name="description" content="The #1 Sports & TCG Card Discord Marketplace. Over 6,500 members. Thousands of cards listed daily. Flat $20/month. $0 selling fees. Fully moderated." />
   <title>The Hobby Hangout | Where The Hobby Lives</title>
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="The Hobby Hangout | Where The Hobby Lives" />
+  <meta property="og:description" content="The #1 Sports & TCG Card Discord Marketplace. 6,500+ members. Thousands of listings daily. Flat $20/mo. $0 selling fees." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="open-graph-default.png" />
 
   <style>
     :root{
@@ -12,112 +18,488 @@
       --panel:#0e0f16;
       --text:#e8e8ee;
       --muted:#b2b3bd;
-      --accent:#ffd400;
+      --line:#202233;
+      --metal:#c9c9d2;     /* silver/gray */
+      --accent:#ffd400;    /* yellow */
       --accent2:#ffea66;
       --shadow: 0 18px 50px rgba(0,0,0,.45);
       --radius: 18px;
       --max: 1120px;
-      --font: ui-sans-serif, system-ui, Segoe UI, Roboto, Helvetica, Arial;
     }
+
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family:var(--font);
-      background:var(--bg);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 700px at 70% 0%, rgba(255,212,0,.14), transparent 55%),
+        radial-gradient(900px 600px at 10% 10%, rgba(201,201,210,.10), transparent 60%),
+        linear-gradient(180deg, var(--bg), #05050a 70%);
       color:var(--text);
+      line-height:1.4;
     }
-    .wrap{max-width:var(--max); margin:auto; padding:28px 20px 80px;}
+
     a{color:inherit;text-decoration:none}
-    .topbar{display:flex;justify-content:space-between;align-items:center;padding:12px 0;}
-    .logoImg{height:46px;object-fit:contain;}
+    .wrap{max-width:var(--max); margin:0 auto; padding:28px 20px 80px;}
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+      position:sticky; top:0; z-index:50;
+      padding:14px 0;
+      background: linear-gradient(180deg, rgba(7,7,11,.92), rgba(7,7,11,.6), transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      letter-spacing:.2px;
+    }
+    .logoWrap{
+      width:44px; height:44px; border-radius:14px;
+      border:1px solid rgba(255,212,0,.25);
+      background: rgba(14,15,22,.35);
+      box-shadow: 0 10px 30px rgba(255,212,0,.10);
+      display:grid; place-items:center;
+      overflow:hidden;
+    }
+    .logoImg{
+      width:44px; height:44px;
+      object-fit:contain;
+      display:block;
+    }
+    .brand h1{font-size:14px; margin:0; color:var(--metal); font-weight:900;}
+    .brand span{display:block; font-size:12px; color:var(--muted); font-weight:700; margin-top:2px;}
+
+    .nav{display:flex; gap:14px; align-items:center; flex-wrap:wrap; justify-content:flex-end;}
+    .nav a{
+      font-size:13px; color:var(--muted);
+      padding:10px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(14,15,22,.45);
+    }
+    .nav a:hover{border-color:rgba(255,212,0,.35); color:var(--text);}
+
     .btn{
-      padding:12px 16px;border-radius:999px;
-      background:linear-gradient(180deg,var(--accent),var(--accent2));
-      color:#000;font-weight:900;border:1px solid rgba(255,212,0,.55);
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:12px 16px; border-radius:999px;
+      font-weight:900; font-size:14px;
+      border:1px solid rgba(255,212,0,.55);
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      color:#000;
+      box-shadow: 0 12px 30px rgba(255,212,0,.16);
+      gap:10px;
       cursor:pointer;
     }
     .btn:hover{filter:brightness(1.02)}
-    .section{margin-top:36px;}
-    .headline{font-size:50px;font-weight:900;color:var(--accent);margin:10px 0;}
-    .subhead{font-size:18px;color:var(--muted);margin:0 0 12px;}
-    .pitch{font-size:15px;color:var(--text);margin:0 0 18px;}
-    .card{background:rgba(14,15,22,.7);padding:18px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.08);margin-top:12px;}
+    .btn.secondary{
+      background: rgba(14,15,22,.55);
+      border:1px solid rgba(255,255,255,.14);
+      color:var(--text);
+      box-shadow:none;
+      font-weight:800;
+    }
+    .btn.secondary:hover{border-color:rgba(255,212,0,.35)}
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:26px;
+      padding:32px 0 10px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr; padding-top:22px;}
+    }
+
+    .kicker{
+      display:inline-flex; gap:10px; align-items:center;
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(255,212,0,.25);
+      background: rgba(255,212,0,.06);
+      color:var(--metal);
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+    }
+    .kicker i{
+      width:8px; height:8px; border-radius:99px; background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(255,212,0,.12);
+      display:inline-block;
+    }
+
+    .headline{
+      font-size:54px; margin:14px 0 12px;
+      letter-spacing:-1.2px;
+      line-height:1.02;
+      color:var(--metal);
+      text-shadow: 0 10px 50px rgba(0,0,0,.35);
+    }
+    @media (max-width: 520px){ .headline{font-size:40px;} }
+
+    .subhead{
+      font-size:16px; color:var(--muted); margin:0 0 10px;
+      max-width: 64ch;
+      font-weight:800;
+    }
+
+    .pitch{
+      font-size:15px;
+      color:rgba(232,232,238,.92);
+      margin:0 0 18px;
+      max-width: 72ch;
+      font-weight:650;
+    }
+    .pitch b{color:var(--accent)}
+
+    .ctaRow{display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-top:18px;}
+
+    .card{
+      background: rgba(14,15,22,.7);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .panel{
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+    }
+    .panel:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(600px 250px at 20% 0%, rgba(255,212,0,.12), transparent 55%),
+        radial-gradient(700px 300px at 95% 10%, rgba(201,201,210,.10), transparent 60%);
+      pointer-events:none;
+      opacity:.95;
+    }
+    .panel > *{position:relative; z-index:1;}
+
+    .section{margin-top:34px;}
+    .section h2{
+      margin:0 0 12px;
+      font-size:22px;
+      color:var(--metal);
+      letter-spacing:-.2px;
+    }
+    .section p.lead{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 750;
+      max-width: 80ch;
+    }
+
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    @media (max-width:980px){.grid3{grid-template-columns:1fr;}}
+    .tile{padding:18px;}
+    .tile h3{margin:0 0 8px; font-size:16px; color:var(--text); font-weight:950;}
+    .tile p{margin:0; color:var(--muted); font-size:13px; font-weight:650;}
+
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,212,0,.25);
+      background: rgba(255,212,0,.06);
+      color:var(--metal);
+      font-weight:900;
+      margin-bottom:10px;
+    }
+
+    .emphLine{
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,212,0,.30);
+      background: rgba(255,212,0,.08);
+    }
+    .emphLine .top{
+      font-weight: 1000;
+      color: var(--accent);
+      font-size: 16px;
+      letter-spacing: .2px;
+    }
+    .emphLine .bot{
+      margin-top: 6px;
+      color: rgba(232,232,238,.92);
+      font-weight: 900;
+      font-size: 14px;
+    }
+
+    .compare{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    @media (max-width:980px){.compare{grid-template-columns:1fr;}}
+    .compare .col{
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.08);
+      background: rgba(7,7,11,.45);
+    }
+    .compare .col h3{
+      margin:0 0 8px;
+      font-size: 14px;
+      font-weight: 1000;
+      color: var(--metal);
+      letter-spacing: .2px;
+      text-transform: uppercase;
+    }
+    .compare ul{
+      margin:0; padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 750;
+    }
+    .compare li{margin: 8px 0;}
+    .compare b{color:var(--text)}
+
+    .split{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:16px;
+      align-items:start;
+    }
+    @media (max-width:980px){.split{grid-template-columns:1fr;}}
+
+    .steps{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+    }
+    .steps li{margin: 10px 0;}
+    .steps b{color: var(--text);}
+
+    footer{
+      margin-top:46px;
+      padding-top:20px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:rgba(178,179,189,.9);
+      font-size:12px;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-
-    <!-- TOP NAV -->
     <div class="topbar">
-      <img class="logoImg" src="LOGO.JPG" alt="The Hobby Hangout Logo">
-      <a class="btn" href="https://whop.com/checkout/6kFO8OWGtroEg7g48h-Noel-sl7I-wgpS-ZH0TSWPQHga2/" target="_blank">Start 7-Day Free Trial</a>
+      <div class="brand">
+        <div class="logoWrap">
+          <img class="logoImg" src="LOGO.JPG" alt="The Hobby Hangout Logo" />
+        </div>
+        <div>
+          <h1>The Hobby Hangout</h1>
+          <span>Where The Hobby Lives.</span>
+        </div>
+      </div>
+
+      <div class="nav">
+        <a href="#nosellingfees">No Selling Fees</a>
+        <a href="#why">Why Join</a>
+        <a href="#how">How It Works</a>
+        <a class="btn" href="https://whop.com/checkout/6kFO8OWGtroEg7g48h-Noel-sl7I-wgpS-ZH0TSWPQHga2/" target="_blank" rel="noopener">
+          Start 7-Day Free Trial <span aria-hidden="true">→</span>
+        </a>
+      </div>
     </div>
 
     <!-- HERO -->
-    <section>
-      <h1 class="headline">The #1 Sports &amp; TCG Card Discord Marketplace</h1>
-      <p class="subhead">Over 6,500 Members. Thousands of Cards Listed Every Day.</p>
-      <p class="pitch">
-        The Hobby Hangout is a fully moderated sports &amp; TCG card marketplace built for collectors who want
-        structure, protection, and real volume. <strong>Flat $20/month</strong>. <strong>No selling fees.</strong> Verified buyers and sellers.
-      </p>
+    <section class="hero" id="top">
+      <div>
+        <div class="kicker"><i></i> The #1 Sports &amp; TCG Card Discord Marketplace</div>
 
-      <div class="card">
-        <div style="font-size:16px;font-weight:900;color:var(--accent);">Traditional marketplaces charge up to 14% per sale</div>
-        <p style="margin-top:8px;color:var(--muted);font-size:14px;">
-          Sell a <strong>$1,000</strong> card elsewhere and lose <strong>$130+</strong>. Sell it here and keep it.<br>
-          <strong>$20/month. $0 selling fees.</strong>
+        <h2 class="headline">The #1 Sports &amp; TCG Card Discord Marketplace</h2>
+
+        <p class="subhead">Over 6,500 Members. Thousands of Cards Listed Every Day.</p>
+
+        <p class="pitch">
+          The Hobby Hangout is a fully moderated sports &amp; TCG card marketplace built for collectors who want structure,
+          protection, and real volume. <b>Flat $20/month. No selling fees.</b> Verified buyers and sellers.
         </p>
+
+        <div class="emphLine">
+          <div class="top">Traditional marketplaces charge up to 14% per sale.</div>
+          <div class="bot">
+            Sell a <b>$1,000</b> card elsewhere and lose <b>$130+</b>. Sell it here and keep it.<br/>
+            <b>$20/month. $0 selling fees.</b>
+          </div>
+        </div>
+
+        <div class="ctaRow">
+          <a class="btn" href="https://whop.com/checkout/6kFO8OWGtroEg7g48h-Noel-sl7I-wgpS-ZH0TSWPQHga2/" target="_blank" rel="noopener">
+            Start 7-Day Free Trial →
+          </a>
+        </div>
       </div>
 
-      <div style="margin-top:18px;">
-        <a class="btn" href="https://whop.com/checkout/6kFO8OWGtroEg7g48h-Noel-sl7I-wgpS-ZH0TSWPQHga2/" target="_blank">
-          Start 7-Day Free Trial
+      <div class="card panel">
+        <div class="tag">Core positioning</div>
+        <div style="font-weight:1000; color: var(--metal); font-size:16px; letter-spacing:-.2px;">
+          The #1 Sports &amp; TCG Card Discord | Where The Hobby Lives
+        </div>
+
+        <div style="margin-top:12px; color: var(--muted); font-size:13px; font-weight:800;">
+          What you get inside:
+        </div>
+
+        <ul style="margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:13px; font-weight:750;">
+          <li><b style="color:var(--text)">Thousands of daily listings</b> across sports &amp; TCG</li>
+          <li><b style="color:var(--text)">Moderated marketplace</b> with enforced structure</li>
+          <li><b style="color:var(--text)">Verified members</b> + tiered vouches</li>
+          <li><b style="color:var(--text)">$0 selling fees</b> — keep your profits</li>
+        </ul>
+
+        <div class="emphLine" style="margin-top:14px;">
+          <div class="top">$20/month. $0 selling fees.</div>
+          <div class="bot">Keep your profits. Not just your cards.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NO SELLING FEES (Critical Marketing Block) -->
+    <section class="section" id="nosellingfees">
+      <h2>Stop Paying 14% Every Time You Sell</h2>
+      <p class="lead">Traditional marketplaces profit from every transaction. We don’t.</p>
+
+      <div class="compare">
+        <div class="col card">
+          <h3>Traditional marketplaces</h3>
+          <ul>
+            <li>Charge up to <b>14%</b> per sale</li>
+            <li>Take <b>$130+</b> on a <b>$1,000</b> card</li>
+            <li>Profit from every transaction</li>
+          </ul>
+        </div>
+
+        <div class="col card">
+          <h3>The Hobby Hangout</h3>
+          <ul>
+            <li><b>$20/month</b> flat subscription</li>
+            <li><b>$0</b> selling fees</li>
+            <li>Unlimited selling</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="emphLine">
+        <div class="top">$20/month. $0 selling fees.</div>
+        <div class="bot">Keep your profits. Not just your cards.</div>
+      </div>
+
+      <div class="ctaRow">
+        <a class="btn" href="https://whop.com/checkout/6kFO8OWGtroEg7g48h-Noel-sl7I-wgpS-ZH0TSWPQHga2/" target="_blank" rel="noopener">
+          Start 7-Day Free Trial →
         </a>
       </div>
     </section>
 
-    <!-- NO SELLING FEES -->
-    <section class="section">
-      <h2>Stop Paying 14% Every Time You Sell</h2>
-      <div class="card">
-        <strong>Traditional marketplaces:</strong><br>
-        • Charge up to 14% per sale<br>
-        • Take $130+ on a $1,000 card<br>
-        • Profit from every transaction
-      </div>
-      <div class="card">
-        <strong>The Hobby Hangout:</strong><br>
-        • $20/month flat subscription<br>
-        • $0 selling fees<br>
-        • Unlimited selling
-      </div>
-    </section>
-
-    <!-- WHY JOIN -->
-    <section class="section">
+    <!-- WHY COLLECTORS JOIN -->
+    <section class="section" id="why">
       <h2>Why 6,500+ Collectors Are Here</h2>
-      <div class="card"><strong>No Selling Fees</strong><br>Flat $20/month. Other platforms take up to 14% per sale.</div>
-      <div class="card"><strong>Real Volume</strong><br>Thousands listed daily. Deals move fast.</div>
-      <div class="card"><strong>Moderated Marketplace</strong><br>Rules enforced for cleaner deals.</div>
-      <div class="card"><strong>Verified Members</strong><br>Clear vouch system + reputation roles.</div>
-      <div class="card"><strong>Middleman System</strong><br>Optional protection for high-value deals.</div>
-      <div class="card"><strong>Giveaways</strong><br>Weekly & monthly member-only giveaways.</div>
-    </section>
 
-    <!-- HOW IT WORKS -->
-    <section class="section">
-      <h2>How It Works</h2>
-      <div class="card">
-        1) Click <strong>Start 7-Day Free Trial</strong>.<br>
-        2) You’ll be redirected to <strong>Whop</strong>.<br>
-        3) Create or log into your account.<br>
-        4) Start your free trial.<br>
-        5) Connect Discord. Access is granted automatically.
+      <div class="grid3">
+        <div class="card tile">
+          <div class="tag">No Selling Fees</div>
+          <h3>Flat $20/month</h3>
+          <p>Other platforms take up to 14% per sale. We take nothing per transaction.</p>
+        </div>
+
+        <div class="card tile">
+          <div class="tag">Real Marketplace Volume</div>
+          <h3>Thousands listed daily</h3>
+          <p>Active buyers. Active sellers. Deals move fast.</p>
+        </div>
+
+        <div class="card tile">
+          <div class="tag">Moderated Marketplace</div>
+          <h3>Rules enforced</h3>
+          <p>Payment deadlines, selling requirements, marketplace expectations, and server standards.</p>
+        </div>
+
+        <div class="card tile">
+          <div class="tag">Verified Members</div>
+          <h3>Reputation roles</h3>
+          <p>Tiered verification system, unique vouch requirements, and reputation-based roles.</p>
+        </div>
+
+        <div class="card tile">
+          <div class="tag">Middleman System</div>
+          <h3>Optional protection</h3>
+          <p>Structured high-value transaction process when you want added safety.</p>
+        </div>
+
+        <div class="card tile">
+          <div class="tag">Giveaways</div>
+          <h3>Weekly &amp; monthly</h3>
+          <p>Member-only giveaways, ongoing incentives, and an active community.</p>
+        </div>
       </div>
     </section>
 
+    <!-- HOW IT WORKS + WHY WHOP -->
+    <section class="section" id="how">
+      <h2>How It Works</h2>
+
+      <div class="split">
+        <div class="card tile">
+          <ol class="steps">
+            <li>Click <b>Start 7-Day Free Trial</b>.</li>
+            <li>You’ll be redirected to <b>Whop</b> (our secure membership platform).</li>
+            <li>Create or log into your <b>Whop</b> account.</li>
+            <li>Start your <b>7-day free trial</b>.</li>
+            <li>Connect your <b>Discord</b> account.</li>
+            <li>Access is granted <b>automatically</b> — no manual approvals, no delays.</li>
+          </ol>
+
+          <div class="ctaRow">
+            <a class="btn" href="https://whop.com/checkout/6kFO8OWGtroEg7g48h-Noel-sl7I-wgpS-ZH0TSWPQHga2/" target="_blank" rel="noopener">
+              Start 7-Day Free Trial →
+            </a>
+          </div>
+        </div>
+
+        <div class="card tile">
+          <div class="tag">Why we use Whop</div>
+          <h3 style="margin:0 0 8px; font-size:16px; color:var(--text); font-weight:950;">Secure membership + automation</h3>
+          <p style="margin:0; color:var(--muted); font-size:13px; font-weight:750;">
+            Whop securely manages subscription billing, renewals, member access, and Discord automation.
+            It allows us to handle payments and access in one centralized, secure system.
+          </p>
+
+          <div class="emphLine" style="margin-top:14px;">
+            <div class="top">Access is automated.</div>
+            <div class="bot">Start the trial → connect Discord → you’re in.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> The Hobby Hangout. Where The Hobby Lives.</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a href="#top" style="opacity:.9">Back to top</a>
+      </div>
+    </footer>
   </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
